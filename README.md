@@ -2,6 +2,11 @@
 
 This repo contains smart contracts for SSI based Identity Management System
 
+## Prerequisites
+- NodeJS v8.9.4+
+- Truffle
+- Metamask Extension
+
 ## Contributors
 - [Abeshek Narayan R](https://github.com/abesheknarayan)
 - [A Pranav Shriram](https://github.com/PranavShriram)
