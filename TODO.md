@@ -2,12 +2,6 @@
 - [ ] Init Truffle boilerplate 
 - [ ] All aforementioned contracts
 
-## Prerequisites
-- NodeJS v8.9.4+
-- Truffle
-- Metamask Extension
-
-
 ## Contracts
 - [ ] Users with Roles (contains verinym + contract role)
 - [ ] Revocation Registry

@@ -1,0 +1,3 @@
+[submodule "fyp-frontend"]
+	path = fyp-frontend
+	url = https://github.com/abesheknarayan/fyp-frontend
