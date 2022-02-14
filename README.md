@@ -7,6 +7,11 @@ This repo contains smart contracts for SSI based Identity Management System
 - Truffle
 - Metamask Extension
 
+## Setup
+```bash
+yarn install
+```
+
 ## Contributors
 - [Abeshek Narayan R](https://github.com/abesheknarayan)
 - [A Pranav Shriram](https://github.com/PranavShriram)
