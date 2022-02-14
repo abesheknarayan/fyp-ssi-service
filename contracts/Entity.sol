@@ -8,8 +8,6 @@ contract Entity {
         User
     }
 
-    struct Entity {
-        Role role;
-        // add others according to verinym in EntityRegistry
-    }
+    Role role;
+    // add others according to verinym in EntityRegistry
 }
