@@ -11,22 +11,20 @@ contract Accumulator is Roles {
     mapping(string => int256) credentialHash_to_witness;
 
     // adds a new cred hash to accumulator
-    function updateOnAdd(string _credentialHash)
+    function updateOnAdd(string memory _credentialHash)
         internal
         onlyStewardOrTrustAnchor
     {
-        _;
     }
 
     // removes the hash from accumulator
-    function updateOnRevoke(string _credentialHash)
+    function updateOnRevoke(string memory _credentialHash)
         internal
         onlyStewardOrTrustAnchor
     {
-        _;
     }
 
-    function getWitness(string _credentialHash) internal view returns (int256) {
-        return credentialHash_to_witness(_credentialHash);
+    function getWitness(string memory _credentialHash) internal view returns (int256) {
+        return credentialHash_to_witness[_credentialHash];
     }
 }

@@ -1,32 +1,34 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-import "./Types.sol";
 import "./EntityRegistry.sol";
 
-contract Roles is Types, EntityRegistry {
+contract Roles is EntityRegistry {
     modifier onlyStewardOrTrustAnchor() {
-        Entity caller = address_to_entity(req.sender);
-        require(caller.role == Role.Steward || caller.role == Role.TrustAnchor);
+        Role callerRole = entityRegistry[msg.sender].role;
+        require(callerRole == Role.Steward || callerRole == Role.TrustAnchor);
         _;
     }
 
     modifier onlySteward() {
-        Entity caller = address_to_entity(req.sender);
-        require(caller.role == Role.Steward);
+        Role callerRole = entityRegistry[msg.sender].role; 
+        require(callerRole == Role.Steward);
         _;
     }
 
-    function assignTrustAnchorRole(address _address) stewardOrTrustAnchor {
+    function assignTrustAnchorRole(address _address)
+        internal
+        onlyStewardOrTrustAnchor
+    {
         // can only change role from User to Trust Anchor
-        require(address_to_entity(_address).role == User);
-        address_to_entity(_address).role = Role.TrustAnchor;
+        require(entityRegistry[_address].role == Role.User);
+        entityRegistry[_address].role = Role.TrustAnchor;
     }
 
     // additional feature to revocate trust anchor role. Can only be done by steward (Remove if unnecessary)
-    function RevocateTrustAnchorRole(address _address) onlySteward {
+    function RevocateTrustAnchorRole(address _address) internal onlySteward {
         // can only change role from Trust Anchor to User
-        require(address_to_entity(_address).role == TrustAnchor);
-        address_to_entity(_address).role = Role.User;
+        require(entityRegistry[_address].role == Role.TrustAnchor);
+        entityRegistry[_address].role = Role.User;
     }
 }

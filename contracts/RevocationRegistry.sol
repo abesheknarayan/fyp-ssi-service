@@ -5,5 +5,5 @@ import "./Accumulator.sol";
 
 contract RevocationRegistry is Accumulator {
     // mapping of hash of credential definition to its accumulators
-    mapping(string => Accumulator) revocationRegistry;
+    mapping(string  => Accumulator) revocationRegistry;
 }
