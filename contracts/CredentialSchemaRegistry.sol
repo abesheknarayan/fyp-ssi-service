@@ -10,7 +10,5 @@ contract CredentialSchemaRegistry is EntityRegistry {
         Entity owner;
     }
 
-    // mapping of credential schema hash to hash of address of issuer (required in accumulator modifier checking)
-    mapping(bytes32  => bytes32) credential_schema_hash_to_issuer_entity_address_hash;
 
 }
