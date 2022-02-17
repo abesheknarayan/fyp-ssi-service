@@ -5,13 +5,13 @@ import "./EntityRegistry.sol";
 
 contract Roles is EntityRegistry {
     modifier onlyStewardOrTrustAnchor() {
-        Role callerRole = entityRegistry[msg.sender].role;
+        Role callerRole = entityRegistry[tx.origin].role;
         require(callerRole == Role.Steward || callerRole == Role.TrustAnchor);
         _;
     }
 
     modifier onlySteward() {
-        Role callerRole = entityRegistry[msg.sender].role; 
+        Role callerRole = entityRegistry[tx.origin].role; 
         require(callerRole == Role.Steward);
         _;
     }
