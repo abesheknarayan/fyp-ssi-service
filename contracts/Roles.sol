@@ -25,10 +25,4 @@ contract Roles is EntityRegistry {
         entityRegistry[_address].role = Role.TrustAnchor;
     }
 
-    // additional feature to revocate trust anchor role. Can only be done by steward (Remove if unnecessary)
-    function RevocateTrustAnchorRole(address _address) internal onlySteward {
-        // can only change role from Trust Anchor to User
-        require(entityRegistry[_address].role == Role.TrustAnchor);
-        entityRegistry[_address].role = Role.User;
-    }
 }

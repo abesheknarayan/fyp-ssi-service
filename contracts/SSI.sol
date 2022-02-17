@@ -13,7 +13,4 @@ contract SSI is EntityRegistry,RevocationRegistry {
         ownerEntity.role = Role.Steward;
         entityRegistry[owner] = ownerEntity;
     }
-
-
-
 }
