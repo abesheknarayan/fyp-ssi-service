@@ -68,7 +68,7 @@ contract Accumulator is Roles, CredentialDefinitionRegistry {
         require(
             credential_definition_hash_to_issuer_entity_address_hash[
                 credentialSchemaHash
-            ] == keccak256(abi.encodePacked(msg.sender))
+            ] == keccak256(abi.encodePacked(tx.origin))
         );
         _;
     }
