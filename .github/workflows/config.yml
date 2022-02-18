@@ -23,6 +23,10 @@ jobs:
       - name: Setup truffle
         run: |
          npm install -g truffle
+        
+      - name: Setup node_modules
+        run: |
+         npm i
 
       - name: Compile smart contracts
         run: |
