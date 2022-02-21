@@ -32,7 +32,7 @@
       *
       * $ truffle test --network <network-name>
       */
-     contracts_build_directory: path.join(__dirname, 'fyp-frontend/src/contracts'),
+     contracts_build_directory: path.join(__dirname, 'contracts-build'),
      networks: {
          // Configuration for mainnet
          development: {
