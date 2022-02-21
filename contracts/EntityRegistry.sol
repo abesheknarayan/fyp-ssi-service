@@ -16,6 +16,6 @@ contract EntityRegistry {
         Role role;
     }
 
-    mapping(address => Entity) entityRegistry;
+    mapping(address => Entity) address_to_entity;
 
 }

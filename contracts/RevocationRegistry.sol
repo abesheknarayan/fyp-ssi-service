@@ -69,7 +69,7 @@ contract RevocationRegistryList is CredentialDefinitionRegistry {
 
 
     modifier isCredentialDefinitionIssuer(bytes32 _credential_definition_id) {
-        require(credentialDefinition[_credential_definition_id].issuer_address == tx.origin);
+        require(id_to_credential_definition[_credential_definition_id].issuer_address == tx.origin);
         _;
     }
 

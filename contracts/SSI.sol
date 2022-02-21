@@ -9,8 +9,8 @@ contract SSI is EntityRegistry,RevocationRegistryList {
 
     constructor() {
         owner = msg.sender;
-        Entity memory ownerEntity;
-        ownerEntity.role = Role.Steward;
-        entityRegistry[owner] = ownerEntity;
+        Entity memory owner_entity;
+        owner_entity.role = Role.Steward;
+        address_to_entity[owner] = owner_entity;
     }
 }
