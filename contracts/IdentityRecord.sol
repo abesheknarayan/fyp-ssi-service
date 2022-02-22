@@ -20,7 +20,7 @@ contract IdentityRecord is Roles {
     function setVerinym(address _address,string memory _DID_public, bytes32 _Vkey, string memory _Url) internal onlyStewardOrTrustAnchor {
 
         //checking whether the given address already have a Verinym or not
-        require(entityRegistry[_address].role == Role.User,"Given address is already a trust anchor");
+        require(address_to_entity[_address].role == Role.User,"Given address is already a trust anchor");
 
         // checking whether the given Public DID already exist or not
         require(!DID_public_exists[_DID_public], "This Public DID already exists");

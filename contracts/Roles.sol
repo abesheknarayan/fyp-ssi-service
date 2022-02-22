@@ -5,14 +5,14 @@ import "./EntityRegistry.sol";
 
 contract Roles is EntityRegistry {
     modifier onlyStewardOrTrustAnchor() {
-        Role callerRole = entityRegistry[tx.origin].role;
-        require(callerRole == Role.Steward || callerRole == Role.TrustAnchor);
+        Role callerRole = address_to_entity[tx.origin].role;
+        require(callerRole == Role.Steward || callerRole == Role.TrustAnchor,"This function is restricted to steward or trust anchor");
         _;
     }
 
     modifier onlySteward() {
-        Role callerRole = entityRegistry[tx.origin].role; 
-        require(callerRole == Role.Steward);
+        Role callerRole = address_to_entity[tx.origin].role; 
+        require(callerRole == Role.Steward,"This function is restricted to steward");
         _;
     }
 
@@ -21,8 +21,8 @@ contract Roles is EntityRegistry {
         onlyStewardOrTrustAnchor
     {
         // can only change role from User to Trust Anchor
-        require(entityRegistry[_address].role == Role.User);
-        entityRegistry[_address].role = Role.TrustAnchor;
+        require(address_to_entity[_address].role == Role.User,"Given address is not a User role");
+        address_to_entity[_address].role = Role.TrustAnchor;
     }
 
 }
