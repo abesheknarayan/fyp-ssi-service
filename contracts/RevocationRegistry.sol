@@ -91,7 +91,7 @@ contract RevocationRegistryList is CredentialDefinitionRegistry {
 
     function getWitnessWithIndex(bytes32 _credential_definition_id,uint _index) internal view returns (string memory) {
         // check if given index is less than size of public witness list
-        require(_index < credential_definition_id_to_revocation_registry[_credential_definition_id].public_witness_list.length);
+        require(_index < credential_definition_id_to_revocation_registry[_credential_definition_id].public_witness_list.length,"invalid index");
         return credential_definition_id_to_revocation_registry[_credential_definition_id].public_witness_list[_index];
     }
 
