@@ -51,7 +51,7 @@ contract CredentialSchemaRegistry is Roles {
     }
 
     // retriving all the credential schemas published by a particular turst anchor.
-    function getall_credential_schemas(address _address) internal view returns(CredentialSchema[] memory) {
+    function getAllCredentialSchemas(address _address) internal view returns(CredentialSchema[] memory) {
 
         // checking whether the given address has atleast one credential schema
         require(issuer_address_to_all_credential_schema[_address].length >= 1,"No credential schema is published by this address");
