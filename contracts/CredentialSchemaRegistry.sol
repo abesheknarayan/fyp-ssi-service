@@ -14,7 +14,7 @@ contract CredentialSchemaRegistry is Roles {
         string attributes; 
     }
 
-    mapping(address => CredentialSchema[]) all_credential_schema;   // all credential schemas published by a particular trust anchor
+    mapping(address => CredentialSchema[]) issuer_address_to_all_credential_schema;   // all credential schemas published by a particular trust anchor
     mapping(bytes32 => CredentialSchema) id_to_credential_schema;   // particular credential schema
     mapping(bytes32 => bool) credential_schema_exists;   // whether a particular credential schema exists or not
 
@@ -27,7 +27,7 @@ contract CredentialSchemaRegistry is Roles {
         CredentialSchema memory _new_schema = CredentialSchema(_name,_id,_version,tx.origin,_attributes);
         id_to_credential_schema[_id] = _new_schema;
         credential_schema_exists[_id] = true;
-        all_credential_schema[tx.origin].push(_new_schema);
+        issuer_address_to_all_credential_schema[tx.origin].push(_new_schema);
     }
 
     // if credential schema id is not known this function could be used
@@ -54,8 +54,8 @@ contract CredentialSchemaRegistry is Roles {
     function getall_credential_schemas(address _address) internal view returns(CredentialSchema[] memory) {
 
         // checking whether the given address has atleast one credential schema
-        require(all_credential_schema[_address].length >= 1,"No credential schema is published by this address");
+        require(issuer_address_to_all_credential_schema[_address].length >= 1,"No credential schema is published by this address");
 
-        return all_credential_schema[_address];
+        return issuer_address_to_all_credential_schema[_address];
     }
 }

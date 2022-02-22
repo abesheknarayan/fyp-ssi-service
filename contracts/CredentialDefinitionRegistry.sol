@@ -21,7 +21,7 @@ contract CredentialDefinitionRegistry is Roles, CredentialSchemaRegistry {
 
 
 
-    mapping(address => CredentialDefinition[]) all_credential_definition; // all credential definition published by a particular trust anchor
+    mapping(address => CredentialDefinition[]) issuer_address_to_all_credential_definition; // all credential definition published by a particular trust anchor
     mapping(bytes32 => CredentialDefinition) id_to_credential_definition;   // particular credential definition
     mapping(bytes32 => bool) credential_definition_exists;   // whether a particular credential definition exists or not
 
@@ -38,7 +38,7 @@ contract CredentialDefinitionRegistry is Roles, CredentialSchemaRegistry {
             CredentialDefinition memory _new_cred_definition = CredentialDefinition(_name,_id,_version,tx.origin,_Vkey,_credSchema_id,_isRevocatable);
             id_to_credential_definition[_id] = _new_cred_definition;
             credential_definition_exists[_id] = true;
-            all_credential_definition[tx.origin].push(_new_cred_definition);
+            issuer_address_to_all_credential_definition[tx.origin].push(_new_cred_definition);
 
     }
 
@@ -65,9 +65,9 @@ contract CredentialDefinitionRegistry is Roles, CredentialSchemaRegistry {
     function getAllCredentialDefinition(address _address) internal view returns(CredentialDefinition[] memory) {
 
         // checking whether the given address has atleast one credential definition
-        require(all_credential_definition[_address].length >= 1,"No credential definition is published by this address");
+        require(issuer_address_to_all_credential_definition[_address].length >= 1,"No credential definition is published by this address");
 
-        return all_credential_definition[_address];
+        return issuer_address_to_all_credential_definition[_address];
     }
 
 }
