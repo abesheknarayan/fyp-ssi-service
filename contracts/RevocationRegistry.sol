@@ -78,14 +78,24 @@ contract RevocationRegistryList is CredentialDefinitionRegistry {
         Accumulator memory _accumulator = Accumulator(_prime,_accumulator_value);
         RevocationRegistry memory _revocationRegistry = RevocationRegistry(_credential_definition_id,_public_witness_list,_accumulator);
         credential_definition_id_to_revocation_registry[_credential_definition_id] = _revocationRegistry;
-        
     }
 
-    function getWitnessWithIndex(bytes32 _credential_definition_id,uint _index) public view returns (string memory) {
+    function getAccumulator(bytes32 _credential_definition_id) internal view returns (Accumulator memory) {
+        return credential_definition_id_to_revocation_registry[_credential_definition_id].accumulator;
+    }
+
+    function setAccumulator(bytes32 _credential_definition_id,string memory _accumulator_value) internal isCredentialDefinitionIssuer(_credential_definition_id)  {
+        credential_definition_id_to_revocation_registry[_credential_definition_id].accumulator.accumulator_value = _accumulator_value;
+    }
+
+
+    function getWitnessWithIndex(bytes32 _credential_definition_id,uint _index) internal view returns (string memory) {
+        // check if given index is less than size of public witness list
+        require(_index < credential_definition_id_to_revocation_registry[_credential_definition_id].public_witness_list.length);
         return credential_definition_id_to_revocation_registry[_credential_definition_id].public_witness_list[_index];
     }
 
-    function getAllWitness(bytes32 _credential_definition_id) public view returns (string[] memory) {
+    function getAllWitness(bytes32 _credential_definition_id) internal view returns (string[] memory) {
         return credential_definition_id_to_revocation_registry[_credential_definition_id].public_witness_list;
     }
 
