@@ -11,7 +11,7 @@ Witnesses can be public (in blockchain) but not the hash of any issued credentia
 
 Issuer keeps the hash of issued credential with himself and use it for revocation (implementation is not related to blockchain and in our case it can be done as a part of wallet using db)
 
-Accumulator logic: (needs to be checked !!!!)
+Accumulator logic: 
 
 Basically given H(c) where H is some function (maybe hash or one-way prime mapping) and c is the credential's revocation id (private)
 Compute witness =  g^H(c) over a field G where g is the generator.
