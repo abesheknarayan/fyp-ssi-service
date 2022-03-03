@@ -56,6 +56,7 @@ contract RevocationRegistryList is CredentialDefinitionRegistry {
 
     struct Accumulator {
         string  prime_number; // storing it as string to prevent overflows
+        string generator;
         string  accumulator_value;
     }
 
@@ -74,8 +75,8 @@ contract RevocationRegistryList is CredentialDefinitionRegistry {
     }
 
 
-    function createRevocationRegistry(bytes32 _credential_definition_id,string[] memory _public_witness_list,string memory _prime_number,string memory _accumulator_value) internal isCredentialDefinitionIssuer(_credential_definition_id) {
-        Accumulator memory _accumulator = Accumulator(_prime_number,_accumulator_value);
+    function createRevocationRegistry(bytes32 _credential_definition_id,string[] memory _public_witness_list,string memory _prime_number,string memory _generator,string memory _accumulator_value) internal isCredentialDefinitionIssuer(_credential_definition_id) {
+        Accumulator memory _accumulator = Accumulator(_prime_number,_generator,_accumulator_value);
         RevocationRegistry memory _revocationRegistry = RevocationRegistry(_credential_definition_id,_public_witness_list,_accumulator);
         credential_definition_id_to_revocation_registry[_credential_definition_id] = _revocationRegistry;
     }

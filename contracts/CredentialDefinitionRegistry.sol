@@ -12,7 +12,8 @@ contract CredentialDefinitionRegistry is Roles, CredentialSchemaRegistry {
         bytes32 id;
         string version;
         address issuer_address;
-        bytes32 v_key; // verification key for this particular credential definition.
+        string v_key; // verification key for this particular credential definition. This is e
+        string prime_n; // for modulus using RSA
 
         bytes32 credSchema_id; // the attributes which the credential provides based on this definition can be looked up in the corresponding schema
 
@@ -26,7 +27,7 @@ contract CredentialDefinitionRegistry is Roles, CredentialSchemaRegistry {
     mapping(bytes32 => bool) credential_definition_exists;   // whether a particular credential definition exists or not
 
     function createCredentialDefinition(string memory _name, string memory _version,
-        bytes32 _Vkey, bytes32 _credSchema_id, bool _isRevocatable) internal onlyStewardOrTrustAnchor{
+        string memory _Vkey,string memory _prime_n, bytes32 _credSchema_id, bool _isRevocatable) internal onlyStewardOrTrustAnchor returns(bytes32){
 
             // already existing credential definition shouldn't be modified
             bytes32 _id = keccak256(abi.encodePacked(_name,_version,tx.origin));
@@ -35,11 +36,12 @@ contract CredentialDefinitionRegistry is Roles, CredentialSchemaRegistry {
             // checking whether the given id correspond to a credential schema
             require(credential_schema_exists[_credSchema_id],"The credential schema referred does not exist");
 
-            CredentialDefinition memory _new_cred_definition = CredentialDefinition(_name,_id,_version,tx.origin,_Vkey,_credSchema_id,_isRevocatable);
+            CredentialDefinition memory _new_cred_definition = CredentialDefinition(_name,_id,_version,tx.origin,_Vkey,_prime_n,_credSchema_id,_isRevocatable);
             id_to_credential_definition[_id] = _new_cred_definition;
             credential_definition_exists[_id] = true;
             issuer_address_to_all_credential_definition[tx.origin].push(_new_cred_definition);
 
+            return _id;
     }
 
     // if credential definition id is not known this function could be used
