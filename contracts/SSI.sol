@@ -16,13 +16,22 @@ contract SSI is EntityRegistry, RevocationRegistryList {
 
     event SendCredentialDefinitionId(bytes32 _credential_definition_id);
 
+    event SendCredentialSchemaId(bytes32 _credential_schema_id);
+
     // different name cuz solidity doesnt allow function overriding with different visibility
     function createCredentialSchemaSSI(
         string memory _name,
         string memory _version,
         string memory _attributes
     ) public {
-        createCredentialSchema(_name, _version, _attributes);
+       bytes32 _credential_schema_id = createCredentialSchema(_name, _version, _attributes);
+       emit SendCredentialSchemaId(_credential_schema_id);
+    }
+
+    function getCredentialSchemaWithIDSSI(
+        bytes32 _credential_schema_id
+    ) public view returns (CredentialSchema memory) {
+        return getCredentialSchemaWithID(_credential_schema_id);
     }
 
     function getAllOwnedCredentialSchemas()
@@ -36,12 +45,11 @@ contract SSI is EntityRegistry, RevocationRegistryList {
     function createCredentialDefinitionSSI(
         string memory _name,
         string memory _version,
-        string memory _Vkey,
-        string memory _prime_n,
+        VerificationKey memory _V_Key,
         bytes32 _credSchema_id,
         bool _isRevocatable
     ) public {
-       bytes32 _credential_definition_id = createCredentialDefinition(_name, _version, _Vkey,_prime_n, _credSchema_id, _isRevocatable);
+       bytes32 _credential_definition_id = createCredentialDefinition(_name, _version,_V_Key, _credSchema_id, _isRevocatable);
         // TODO: Create revocation registry
 
         emit SendCredentialDefinitionId(_credential_definition_id);
@@ -53,5 +61,11 @@ contract SSI is EntityRegistry, RevocationRegistryList {
         returns (CredentialDefinition[] memory)
     {
         return getAllCredentialDefinition(tx.origin);
+    }
+
+    function getCredentialDefinitionWithIDSSI(
+        bytes32 _definition_id
+    ) public view returns (CredentialDefinition memory) {
+        return getCredentialDefinitionWithID(_definition_id);
     }
 }

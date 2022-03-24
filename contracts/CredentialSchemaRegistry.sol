@@ -18,7 +18,7 @@ contract CredentialSchemaRegistry is Roles {
     mapping(bytes32 => CredentialSchema) id_to_credential_schema;   // particular credential schema
     mapping(bytes32 => bool) credential_schema_exists;   // whether a particular credential schema exists or not
 
-    function createCredentialSchema(string memory _name, string memory _version, string memory _attributes) internal onlyStewardOrTrustAnchor {
+    function createCredentialSchema(string memory _name, string memory _version, string memory _attributes) internal onlyStewardOrTrustAnchor returns(bytes32) {
 
         // already existing schema shouldn't be modified
         bytes32 _id = keccak256(abi.encodePacked(_name,_version,tx.origin));
@@ -28,6 +28,7 @@ contract CredentialSchemaRegistry is Roles {
         id_to_credential_schema[_id] = _new_schema;
         credential_schema_exists[_id] = true;
         issuer_address_to_all_credential_schema[tx.origin].push(_new_schema);
+        return _id;
     }
 
     // if credential schema id is not known this function could be used
